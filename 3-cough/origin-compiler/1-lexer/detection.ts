@@ -1,3 +1,17 @@
+const alpha: Array<string> = [
+    "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", 
+    "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"
+]
+
+function isAlpha (token: string) {
+    return alpha.includes(token)
+}
+
+const digits: Array<string> = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+function isDigit (token: string) {
+    return digits.includes(token)
+}
+
 const selectionKeywords: Array<string> = ["if", "else", "elif"];
 function isSelectionKeyword (token: string) {
     return selectionKeywords.includes(token)
@@ -48,4 +62,4 @@ function isIoKeyword (token: string) {
     return ioKeywords.includes(token)
 }
 
-export {isSelectionKeyword, isSequencingKeyword, isAssignmentOperator, isArithmeticOperator, isBinaryOperator, isUnaryOperator, isLogicalKeyword, isLogicalOperator, isBoolKeyword, isIoKeyword}
+export {isAlpha, isDigit, isSelectionKeyword, isSequencingKeyword, isAssignmentOperator, isArithmeticOperator, isBinaryOperator, isUnaryOperator, isLogicalKeyword, isLogicalOperator, isBoolKeyword, isIoKeyword}
