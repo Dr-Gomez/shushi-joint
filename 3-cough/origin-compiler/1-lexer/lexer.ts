@@ -1,18 +1,20 @@
-import { isAlpha, isArithmeticOperator, isAssignmentOperator, isBinaryOperator, isBoolKeyword, isDigit, isIoKeyword, isLogicalKeyword, isLogicalOperator, isSelectionKeyword, isSequencingKeyword, isUnaryOperator } from "./detection";
+import { isAlpha, isArithmeticOperator, isAssignmentOperator, isBinaryOperator, isBoolKeyword, isDigit, isIoKeyword, isLogicalKeyword, isLogicalOperator, isSelectionKeyword, isSequencingKeyword, isUnaryOperator } from "./detection.ts";
 
 interface Token {
     value: string;
     type: string;
 }
 
-function tokenize(input: string): Array<Token> {
-    const tokensIn: Array<string> = input.split(/\s+/);
+export function tokenize(input: string): Array<Token> {
+    const tokensIn: Array<string> = input.split(/\s+/).filter(token => token !== "");
     const tokensOut: Array<Token> = [];
 
     for (const token of tokensIn) {
-        let tokenType = "";
+        let tokenType = ""
         
-        if (isAlpha(token[0])) {
+        if (token[0] == `"`) {
+            tokenType = "STRING"
+        } else if (isAlpha(token[0])) {
             tokenType = "ALPHA"
         } else if (isDigit(token[0])) {
             tokenType = "NUMBER"
