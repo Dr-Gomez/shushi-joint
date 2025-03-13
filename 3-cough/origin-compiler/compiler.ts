@@ -1,3 +1,4 @@
+import { split } from "./0-splitter/splitter.ts";
 import { tokenize } from "./1-lexer/lexer.ts";
 
 function main(): void {
@@ -5,7 +6,9 @@ function main(): void {
         number <- "hello"
         add <- 2`
 
-    const tokens = tokenize(inputCode)
+    const splits = split(inputCode)
+    console.log(splits)
+    const tokens = tokenize(splits)
     console.log(tokens)
 
 }

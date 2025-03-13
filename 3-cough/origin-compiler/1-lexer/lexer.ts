@@ -5,11 +5,10 @@ interface Token {
     type: string;
 }
 
-export function tokenize(input: string): Array<Token> {
-    const tokensIn: Array<string> = input.split(/\s+/).filter(token => token !== "");
+export function tokenize(input: Array<string>): Array<Token> {
     const tokensOut: Array<Token> = [];
 
-    for (const token of tokensIn) {
+    for (const token of input) {
         let tokenType = ""
         
         if (token[0] == `"`) {
