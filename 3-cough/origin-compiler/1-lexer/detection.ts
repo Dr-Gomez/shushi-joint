@@ -3,13 +3,28 @@ const alpha: Array<string> = [
     "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"
 ]
 
-function isAlpha (token: string) {
-    return alpha.includes(token)
+function isAlpha (char: string) {
+    return alpha.includes(char)
 }
 
-const digits: Array<string> = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
-function isDigit (token: string) {
-    return digits.includes(token)
+const digits: Array<string> = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "."]
+function isDigit (char: string) {
+    return digits.includes(char)
+}
+
+const operators: Array<string> = ["+", "-", "*", "/", "%", "&", "|", "^", ">", "<", "=", "!", "$"]
+function isOperator (char: string) {
+    return operators.includes(char)
+}
+
+const whitespaces: Array<string> = [' ', '\n', '\r', '\v']
+function isWhitespace (char: string) {
+    return whitespaces.includes(char)
+}
+
+const strings: Array<string> = ["'", "`", '"']
+function isString (char: string) {
+    return strings.includes(char)
 }
 
 const selectionKeywords: Array<string> = ["if", "else", "elif"];
@@ -62,4 +77,4 @@ function isIoKeyword (token: string) {
     return ioKeywords.includes(token)
 }
 
-export {isAlpha, isDigit, isSelectionKeyword, isSequencingKeyword, isAssignmentOperator, isArithmeticOperator, isBinaryOperator, isUnaryOperator, isLogicalKeyword, isLogicalOperator, isBoolKeyword, isIoKeyword}
+export {isAlpha, isDigit, isOperator, isWhitespace, isString, isSelectionKeyword, isSequencingKeyword, isAssignmentOperator, isArithmeticOperator, isBinaryOperator, isUnaryOperator, isLogicalKeyword, isLogicalOperator, isBoolKeyword, isIoKeyword}
