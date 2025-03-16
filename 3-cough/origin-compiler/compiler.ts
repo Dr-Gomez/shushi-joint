@@ -1,13 +1,11 @@
 import { tokenize } from "./1-lexer/lexer.ts";
 
 function main(): void {
-    const inputCode = `
-        number <- "hello, Don Quixote"
-        add <- 252`
+  const inputCode = `
+        number loop if 2024 2024.5 <- <~ < > <<< >>> + - / * % true and ^ & -- $$
+    `;
 
-    const tokens = tokenize(inputCode)
-    console.log(tokens)
-
+  const tokens = tokenize(inputCode);
 }
 
 main();
