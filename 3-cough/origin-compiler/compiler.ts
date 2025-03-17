@@ -1,11 +1,15 @@
-import { tokenize } from "./1-lexer/lexer.ts";
+import { Token, tokenize } from "./1-lexer/lexer.ts";
+import yardenize from "./2-yarder/yarder.ts";
 
 function main(): void {
   const inputCode = `
-        number loop if 2024 2024.5 <- <~ < > <<< >>> + - / * % true and ^ & -- $$
+      5 + (22 * 5) / 2
     `;
 
-  const tokens = tokenize(inputCode);
+  let tokens: Array<Token>
+  tokens = tokenize(inputCode);
+  console.log(tokens)
+  yardenize(tokens)
 }
 
 main();

@@ -18,7 +18,7 @@ import {
   isWhitespace,
 } from "./detection.ts";
 
-enum TokenType {
+export enum TokenType {
   BOOL,
   INT_NUM,
   REAL_NUM,
@@ -78,7 +78,6 @@ function handleNumbers(input: string, index: number): TokenWrapper {
   let outToken: Token | undefined;
 
   const startIndex = index;
-  index++;
 
   if (input[startIndex] == "0" && !isDigit(input[startIndex + 1])) {
     index += 2;
@@ -95,9 +94,9 @@ function handleNumbers(input: string, index: number): TokenWrapper {
   }
 
   const number: string = input.substring(startIndex, index);
+  index--
 
   outToken = { value: number, type: type };
-
   return { token: outToken, index: index };
 }
 
