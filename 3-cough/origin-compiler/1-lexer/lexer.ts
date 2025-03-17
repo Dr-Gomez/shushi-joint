@@ -79,7 +79,7 @@ function handleNumbers(input: string, index: number): TokenWrapper {
 
   const startIndex = index;
 
-  if (input[startIndex] == "0" && !isDigit(input[startIndex + 1])) {
+  if (input[startIndex] == "0" && !isDigit(input[startIndex + 1]) && !isWhitespace(input[startIndex + 1])) {
     index += 2;
   }
 
@@ -182,6 +182,7 @@ function handleStrings(input: string, index: number): TokenWrapper {
   index++;
 
   const content = input.substring(startIndex, index);
+  index--;
 
   if (index == input.length) {
     outToken = { value: content, type: TokenType.ERROR };
@@ -200,8 +201,6 @@ function handleEncapsulator(input: string, index: number): TokenWrapper {
   } else {
     outToken = { value: input[index], type: TokenType.RIGHT_ENCAPSULATOR };
   }
-
-  index++;
 
   return { token: outToken, index: index };
 }
