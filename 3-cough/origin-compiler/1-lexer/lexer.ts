@@ -119,6 +119,7 @@ function handleWords(input: string, index: number): TokenWrapper {
   }
 
   const word: string = input.substring(startIndex, index);
+  index--;
 
   for (let typeIndex = 0; typeIndex < TypeFunctionPairs.length; typeIndex++) {
     const pair = TypeFunctionPairs[typeIndex];

@@ -3,7 +3,7 @@ import yardenize from "./2-yarder/yarder.ts";
 
 function main(): void {
   const inputCode = `
-      5 + (22 * 5) / 2
+    hello <- 5 + (22 * 5 * boo) / 2
     `;
 
   let tokens: Array<Token>

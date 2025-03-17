@@ -11,7 +11,7 @@ export function yardTokens(tokens: Token[]){
         const token = tokens[tokenIndex];
         console.log(`Processing token: ${JSON.stringify(token)}`);
 
-        if (token.type === TokenType.INT_NUM || token.type === TokenType.REAL_NUM) {
+        if (token.type === TokenType.INT_NUM || token.type === TokenType.REAL_NUM || token.type === TokenType.IDENTIFIER) {
             startIndex = tokenIndex;
             output.push(token);
         } else if (
