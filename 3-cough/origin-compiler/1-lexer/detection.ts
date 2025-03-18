@@ -113,18 +113,22 @@ function isLeftEncapsulator(char: string) {
   return leftEncapsulators.includes(char);
 }
 
-const separators: Array<string> = [",", ";"];
+const separators: Array<string> = [",", ";", ":"];
 function isSeparator(char: string) {
   return separators.includes(char);
 }
 
+const types: Array<string> = ["void", "bool", "int", "float", "char"];
+function isType(token: string) {
+  return types.includes(token);
+}
 
 const selectionKeywords: Array<string> = ["if", "else", "elif"];
 function isSelectionKeyword(token: string) {
   return selectionKeywords.includes(token);
 }
 
-const sequencingKeywords: Array<string> = ["count", "loop", "rift", "warp"];
+const sequencingKeywords: Array<string> = ["rift", "warp"];
 function isSequencingKeyword(token: string) {
   return sequencingKeywords.includes(token);
 }
@@ -154,7 +158,7 @@ function isLogicalKeyword(token: string) {
   return logicalKeywords.includes(token);
 }
 
-const logicalOperators: Array<string> = ["=", "!=", "~=", ">=", "<=", "<", ">"];
+const logicalOperators: Array<string> = ["=", "!=", "~=", "<=", ">=", "<", ">"];
 function isLogicalOperator(token: string) {
   return logicalOperators.includes(token);
 }
@@ -186,6 +190,7 @@ export {
   isSeparator,
   isSequencingKeyword,
   isString,
+  isType,
   isUnaryOperator,
   isWhitespace,
 };

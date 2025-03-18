@@ -1,21 +1,18 @@
 import { Token, TokenType } from "../1-lexer/lexer.ts";
 import { checkIfOperator, getPrecedence } from "./prescedence.ts";
 
-export function yardTokens(tokens: Token[]) {
+export function yardenize(tokens: Token[]) {
   let tokenIndex = 0;
   const output: Array<Token> = [];
   const operators: Array<Token> = [];
-  let startIndex = tokenIndex;
 
   while (tokenIndex < tokens.length) {
     const token = tokens[tokenIndex];
-    console.log(`Processing token: ${JSON.stringify(token)}`);
 
     if (
       token.type === TokenType.INT_NUM || token.type === TokenType.REAL_NUM ||
       token.type === TokenType.IDENTIFIER || token.type === TokenType.STRING
     ) {
-      startIndex = tokenIndex;
       output.push(token);
     } else if (
       checkIfOperator(token)
@@ -77,8 +74,4 @@ export function yardTokens(tokens: Token[]) {
   }
 
   return output;
-}
-
-export default function yardenize(tokens: Token[]): void {
-  console.log(yardTokens(tokens));
 }
