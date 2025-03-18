@@ -228,9 +228,7 @@ function handleError(input: string, index: number): TokenWrapper {
     index++;
   }
   
-  const error = `"${
-    input.substring(startIndex, index)
-  }" is not recognized by the lexer as a construct`;
+  const error = input.substring(startIndex, index);
   outToken = { value: error, type: TokenType.ERROR };
   index--;
   
