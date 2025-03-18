@@ -113,6 +113,12 @@ function isLeftEncapsulator(char: string) {
   return leftEncapsulators.includes(char);
 }
 
+const separators: Array<string> = [",", ";"];
+function isSeparator(char: string) {
+  return separators.includes(char);
+}
+
+
 const selectionKeywords: Array<string> = ["if", "else", "elif"];
 function isSelectionKeyword(token: string) {
   return selectionKeywords.includes(token);
@@ -177,6 +183,7 @@ export {
   isLogicalOperator,
   isOperator,
   isSelectionKeyword,
+  isSeparator,
   isSequencingKeyword,
   isString,
   isUnaryOperator,
