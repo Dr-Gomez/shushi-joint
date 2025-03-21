@@ -23,4 +23,11 @@ interface BoolNode extends Node {
     value: boolean;
 }
 
-export {NodeType, Node, NodeWrapper, BoolNode}
+interface NumberNode extends Node {
+    type: NodeType.NUMBER;
+    value: number;
+    base: "bin" | "oct" | "dec" | "hexa";
+}
+
+
+export {NodeType, Node, NodeWrapper, BoolNode, NumberNode}
