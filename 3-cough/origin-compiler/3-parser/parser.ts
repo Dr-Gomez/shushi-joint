@@ -1,8 +1,8 @@
 import { Token, TokenType } from "../1-lexer/lexer.ts";
-import { NumberBase, Node, NodeType, NodeWrapper, NumberNode } from "./nodes.ts";
+import { NumberBase, Node, NodeType, NodeWrapper, NumberNode, StringNode, BoolNode } from "./nodes.ts";
 
 function handleBool(tokens: Array<Token>, index: number) {
-  let outNode: Node;
+  let outNode: BoolNode;
 
   let value: boolean;
   if (tokens[index].value == "true") {
@@ -45,10 +45,19 @@ function handleNumber(tokens: Array<Token>, index: number) {
   return {node: outNode, index: index}
 }
 
+function handleString(tokens: Array<Token>, index: number) {
+  let outNode: StringNode;
+
+  const value = tokens[index].value
+  outNode = {value: value, type: NodeType.STRING}
+
+  return {node: outNode, index: index}
+}
+
 function handleError(tokens: Array<Token>, index: number) {
   let outNode: Node;
 
-  const msg = tokens + ": " + "Lingual Construct not recognized"
+  const msg = tokens[index].value + ": " + "Lingual Construct not recognized"
   outNode = {value: msg, type: NodeType.ERROR}
   
   return {node: outNode, index: index}
@@ -60,10 +69,13 @@ export function parse(tokens: Array<Token>) {
   let jumpNode: NodeWrapper;
   let index = 0;
   while (index < tokens.length) {
+
     if (tokens[index].type === TokenType.BOOL) {      
       jumpNode = handleBool(tokens, index)
-    } if (tokens[index].type === TokenType.INT_NUM || TokenType.REAL_NUM) {
+    } else if (tokens[index].type === TokenType.INT_NUM || tokens[index].type === TokenType.REAL_NUM) {
       jumpNode = handleNumber(tokens, index)
+    } else if (tokens[index].type === TokenType.STRING) {
+      jumpNode = handleString(tokens, index)
     } else {
       jumpNode = handleError(tokens, index)
     }
@@ -71,6 +83,7 @@ export function parse(tokens: Array<Token>) {
     index = ++jumpNode.index
     nodesOut.push(jumpNode.node)
   }
+
 
   return nodesOut
 }

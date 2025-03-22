@@ -36,5 +36,10 @@ interface NumberNode extends Node {
     base: NumberBase;
 }
 
+interface StringNode extends Node {
+    type: NodeType.STRING;
+    value: string;
+}
 
-export {NodeType, NumberBase, Node, NodeWrapper, BoolNode, NumberNode}
+
+export {NodeType, NumberBase, Node, NodeWrapper, BoolNode, NumberNode, StringNode}
