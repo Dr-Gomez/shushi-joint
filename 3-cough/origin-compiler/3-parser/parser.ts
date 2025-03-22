@@ -1,5 +1,5 @@
 import { Token, TokenType } from "../1-lexer/lexer.ts";
-import { NumberBase, Node, NodeType, NodeWrapper, NumberNode, StringNode, BoolNode } from "./nodes.ts";
+import { NumberBase, Node, NodeType, NodeWrapper, NumberNode, StringNode, BoolNode, IdentifierNode } from "./nodes.ts";
 
 function handleBool(tokens: Array<Token>, index: number) {
   let outNode: BoolNode;
@@ -56,6 +56,16 @@ function handleString(tokens: Array<Token>, index: number) {
   return {node: outNode, index: index}
 }
 
+function handleIdentifier(tokens: Array<Token>, index: number) {
+  let outNode: IdentifierNode;
+
+  const name = tokens[index].value
+
+  outNode = {value: null, name: name, type: NodeType.IDENTIFIER}
+
+  return {node: outNode, index: index}
+}
+
 function handleError(tokens: Array<Token>, index: number) {
   let outNode: Node;
 
@@ -78,6 +88,8 @@ export function parse(tokens: Array<Token>) {
       jumpNode = handleNumber(tokens, index)
     } else if (tokens[index].type === TokenType.STRING) {
       jumpNode = handleString(tokens, index)
+    } else if (tokens[index].type === TokenType.IDENTIFIER) {
+      jumpNode = handleIdentifier(tokens, index)
     } else {
       jumpNode = handleError(tokens, index)
     }

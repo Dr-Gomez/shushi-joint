@@ -5,7 +5,7 @@ import { parse } from "./3-parser/parser.ts";
 
 function main(): void {
   const inputCode = `
-    false true 22.5 225 0b01 0o73 "hahahahahah"
+    false true 22.5 225 0b01 0o73 "hahahahahah" hello
   `;
 
   let tokens: Array<Token>;

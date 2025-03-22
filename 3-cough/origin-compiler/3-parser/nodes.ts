@@ -41,5 +41,10 @@ interface StringNode extends Node {
     value: string;
 }
 
+interface IdentifierNode extends Node {
+    type: NodeType.IDENTIFIER;
+    name: string;
+    value: null
+}
 
-export {NodeType, NumberBase, Node, NodeWrapper, BoolNode, NumberNode, StringNode}
+export {NodeType, NumberBase, Node, NodeWrapper, BoolNode, NumberNode, StringNode, IdentifierNode}
