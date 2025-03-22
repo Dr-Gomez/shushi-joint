@@ -48,7 +48,9 @@ function handleNumber(tokens: Array<Token>, index: number) {
 function handleString(tokens: Array<Token>, index: number) {
   let outNode: StringNode;
 
-  const value = tokens[index].value
+  let value = tokens[index].value
+  value = value.slice(1, -1)
+  
   outNode = {value: value, type: NodeType.STRING}
 
   return {node: outNode, index: index}
