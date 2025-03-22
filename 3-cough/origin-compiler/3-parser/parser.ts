@@ -1,5 +1,5 @@
 import { Token, TokenType } from "../1-lexer/lexer";
-import { Node, NodeType, NodeWrapper, NumberNode } from "./nodes";
+import { Base, Node, NodeType, NodeWrapper, NumberNode } from "./nodes";
 
 function handleBool(tokens: Array<Token>, index: number) {
   let outNode: Node;
@@ -19,19 +19,19 @@ function handleBool(tokens: Array<Token>, index: number) {
 function handleNumber(tokens: Array<Token>, index: number) {
   let outNode: NumberNode;
   
-  let base: "bin" | "oct" | "dec" | "hexa"
+  let base: Base
   let value: number;
 
   let startIndex = 2;
   if (tokens[index][1].value == "b") {
-    base = "bin"
+    base = Base.BIN
   } else if (tokens[index][1].value == "o") {
-    base = "oct"
+    base = Base.OCT
   } else if (tokens[index][1].value == "x") {
-    base = "hexa"
+    base = Base.HEXA
   } else {
     startIndex = 0
-    base = "dec"
+    base = Base.DEC
   }
 
   if (TokenType.INT_NUM) {
