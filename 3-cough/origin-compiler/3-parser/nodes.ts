@@ -8,7 +8,7 @@ enum NodeType {
     ERROR
 }
 
-enum Base {
+enum NumberBase {
     BIN,
     OCT,
     DEC,
@@ -33,8 +33,8 @@ interface BoolNode extends Node {
 interface NumberNode extends Node {
     type: NodeType.NUMBER;
     value: number;
-    base: Base;
+    base: NumberBase;
 }
 
 
-export {NodeType, Base, Node, NodeWrapper, BoolNode, NumberNode}
+export {NodeType, NumberBase, Node, NodeWrapper, BoolNode, NumberNode}

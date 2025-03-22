@@ -1,5 +1,5 @@
-import { Token, TokenType } from "../1-lexer/lexer";
-import { Base, Node, NodeType, NodeWrapper, NumberNode } from "./nodes";
+import { Token, TokenType } from "../1-lexer/lexer.ts";
+import { NumberBase, Node, NodeType, NodeWrapper, NumberNode } from "./nodes.ts";
 
 function handleBool(tokens: Array<Token>, index: number) {
   let outNode: Node;
@@ -18,23 +18,23 @@ function handleBool(tokens: Array<Token>, index: number) {
 
 function handleNumber(tokens: Array<Token>, index: number) {
   let outNode: NumberNode;
-  
-  let base: Base
+
+  let base: NumberBase
   let value: number;
 
   let startIndex = 2;
-  if (tokens[index][1].value == "b") {
-    base = Base.BIN
-  } else if (tokens[index][1].value == "o") {
-    base = Base.OCT
-  } else if (tokens[index][1].value == "x") {
-    base = Base.HEXA
+  if (tokens[index].value[1] == "b") {
+    base = NumberBase.BIN
+  } else if (tokens[index].value[1] == "o") {
+    base = NumberBase.OCT
+  } else if (tokens[index].value[1] == "x") {
+    base = NumberBase.HEXA
   } else {
     startIndex = 0
-    base = Base.DEC
+    base = NumberBase.DEC
   }
 
-  if (TokenType.INT_NUM) {
+  if (tokens[index].type === TokenType.INT_NUM) {
     value = parseInt(tokens[index].value.slice(startIndex))
   } else {
     value = parseFloat(tokens[index].value.slice(startIndex))
@@ -48,7 +48,7 @@ function handleNumber(tokens: Array<Token>, index: number) {
 function handleError(tokens: Array<Token>, index: number) {
   let outNode: Node;
 
-  const msg = "Lingual Construct not recognized"
+  const msg = tokens + ": " + "Lingual Construct not recognized"
   outNode = {value: msg, type: NodeType.ERROR}
   
   return {node: outNode, index: index}
@@ -71,4 +71,6 @@ export function parse(tokens: Array<Token>) {
     index = ++jumpNode.index
     nodesOut.push(jumpNode.node)
   }
+
+  return nodesOut
 }
