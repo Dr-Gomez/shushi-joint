@@ -1,14 +1,16 @@
 import { Token, TokenType } from "../1-lexer/lexer.ts";
 
 export enum BoxType {
-  CONTEXT_SCOPE,
-  ARGUMENT_SCOPE,
-  PARAMETER_SCOPE,
-  OPERATOR_SCOPE,
-  VOID_SCOPE,
+  CONTEXT_SCOPE = TokenType.length,
+  ARGUMENT_SCOPE = TokenType.length + 1,
+  PARAMETER_SCOPE = TokenType.length + 2,
+  OPERATOR_SCOPE = TokenType.length + 3,
+  VOID_SCOPE = TokenType.length + 4,
 }
 
-export type Cargo = Box | Token
+console.log(BoxType.ARGUMENT_SCOPE)
+
+export type Cargo = Box | Token 
 
 export interface Box {
   value: Array<Cargo> | Cargo;

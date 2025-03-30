@@ -21,7 +21,7 @@ import {
 } from "./detection.ts";
 
 export enum TokenType {
-  BOOL,
+  BOOL = 0,
   INT_NUM,
   REAL_NUM,
   STRING,
@@ -40,6 +40,7 @@ export enum TokenType {
   LOGICAL_OPERATOR,
   IO_KEYWORD,
   ERROR,
+  length
 }
 
 export interface Token {

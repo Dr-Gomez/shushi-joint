@@ -10,13 +10,12 @@ function main(): void {
       int hello <- 4;
     }
 
-    ()
+    (())
     (num: 2)
   `;
 
   let tokens: Array<Token>;
   tokens = tokenize(inputCode);
-  console.log(tokens);
 
   
   let cargo: Array<Cargo> = compact(tokens)

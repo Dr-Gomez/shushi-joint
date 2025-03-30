@@ -61,11 +61,11 @@ export function yardenize(tokens: Token[]) {
 
     tokenIndex++;
   }
-
+  
   while (operators.length > 0) {
     const op = operators.pop()!;
     if (
-      (op.type === TokenType.LEFT_ENCAPSULATOR && op.value === ")") ||
+      (op.type === TokenType.LEFT_ENCAPSULATOR && op.value === "(") ||
       (op.type === TokenType.RIGHT_ENCAPSULATOR && op.value === ")")
     ) {
       console.error("MISMATCHED PARENTHESES");
