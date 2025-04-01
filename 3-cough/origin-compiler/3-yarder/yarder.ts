@@ -1,77 +1,43 @@
 import { Token, TokenType } from "../1-lexer/lexer.ts";
+import { Box, BoxType, Cargo } from "../2-compactor/compactor.ts";
 import { checkIfOperator, getPrecedence } from "./prescedence.ts";
 
-export function yardenize(tokens: Token[]) {
-  let tokenIndex = 0;
-  const output: Array<Token> = [];
+export function yardenize(cargos: Array<Cargo>): Array<Cargo> {
+  let cargoIndex = 0;
+  const output: Array<Cargo> = [];
   const operators: Array<Token> = [];
 
-  while (tokenIndex < tokens.length) {
-    const token = tokens[tokenIndex];
-
+  while (cargoIndex < cargos.length) {
     if (
-      token.type === TokenType.INT_NUM || token.type === TokenType.REAL_NUM ||
-      token.type === TokenType.IDENTIFIER || token.type === TokenType.STRING
+      cargos[cargoIndex].type === BoxType.ARGUMENT_SCOPE || cargos[cargoIndex].type === BoxType.CONTEXT_SCOPE || 
+      cargos[cargoIndex].type === BoxType.OPERATOR_SCOPE || cargos[cargoIndex].type === BoxType.PARAMETER_SCOPE
     ) {
-      output.push(token);
+      const yard = yardenize(cargos[cargoIndex].value as Array<Box>)
+      const cargo: Box = {value: yard, type: cargos[cargoIndex].type as BoxType}
+      output.push(cargo)
     } else if (
-      checkIfOperator(token)
+      cargos[cargoIndex].type === TokenType.INT_NUM || cargos[cargoIndex].type === TokenType.REAL_NUM ||
+      cargos[cargoIndex].type === TokenType.IDENTIFIER || cargos[cargoIndex].type ===  TokenType.STRING ||
+      cargos[cargoIndex].type === BoxType.VOID_SCOPE
+    ) {
+      output.push(cargos[cargoIndex])
+    } else if (
+      checkIfOperator(cargos[cargoIndex] as Token)
     ) {
       while (
         operators.length > 0 &&
-        (checkIfOperator(token)) &&
-        getPrecedence(operators[operators.length - 1].value) >=
-          getPrecedence(token.value)
+        (getPrecedence(operators[operators.length - 1].value) >= getPrecedence(cargos[cargoIndex].value as string))
       ) {
-        output.push(operators.pop()!);
+        output.push(operators.pop()!)
       }
-      operators.push(token);
-    } else if (
-      token.type === TokenType.LEFT_ENCAPSULATOR && token.value === "("
-    ) {
-      operators.push(token);
-    } else if (
-      token.type === TokenType.RIGHT_ENCAPSULATOR && token.value === ")"
-    ) {
-      while (
-        operators.length > 0 &&
-        operators[operators.length - 1].type !== TokenType.LEFT_ENCAPSULATOR
-      ) {
-        output.push(operators.pop()!);
-      }
-      if (operators.length === 0) {
-        console.error("MISMATCHED PARENTHESES");
-      } else {
-        operators.pop();
-      }
+      operators.push(cargos[cargoIndex] as Token)
     } else {
       while (operators.length > 0) {
-        const op = operators.pop()!;
-        if (
-          op.type === TokenType.LEFT_ENCAPSULATOR ||
-          op.type === TokenType.RIGHT_ENCAPSULATOR
-        ) {
-          console.error("MISMATCHED PARENTHESES");
-        }
-        output.push(op);
+        output.push(operators.pop()!)
       }
-
-      output.push(token);
     }
-
-    tokenIndex++;
-  }
-  
-  while (operators.length > 0) {
-    const op = operators.pop()!;
-    if (
-      (op.type === TokenType.LEFT_ENCAPSULATOR && op.value === "(") ||
-      (op.type === TokenType.RIGHT_ENCAPSULATOR && op.value === ")")
-    ) {
-      console.error("MISMATCHED PARENTHESES");
-    }
-    output.push(op);
+    cargoIndex++
   }
 
-  return output;
+  return output
 }

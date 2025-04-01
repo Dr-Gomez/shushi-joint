@@ -8,12 +8,10 @@ export enum BoxType {
   VOID_SCOPE = TokenType.length + 4,
 }
 
-console.log(BoxType.ARGUMENT_SCOPE)
-
 export type Cargo = Box | Token 
 
 export interface Box {
-  value: Array<Cargo> | Cargo;
+  value: Array<Cargo>;
   type: BoxType;
 }
 
@@ -94,10 +92,6 @@ export function compact(tokens: Array<Token>): Array<Cargo> {
   let outBox: Box;
 
   outBox = encapsulate(tokens).box
-
-  if (outBox.value.constructor !== Array) {
-    outBox.value = [outBox.value as Cargo]
-  }
 
   return outBox.value
 }

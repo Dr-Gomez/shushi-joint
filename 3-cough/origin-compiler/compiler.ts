@@ -21,8 +21,8 @@ function main(): void {
   let cargo: Array<Cargo> = compact(tokens)
   console.log(cargo)
 
-  // tokens = yardenize(tokens);
-  // console.log(tokens)
+  cargo = yardenize(cargo);
+  console.log(cargo)
 
   // // let nodes: Array<Node>;
   // // nodes = parse(tokens)
