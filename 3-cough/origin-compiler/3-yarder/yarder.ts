@@ -26,18 +26,24 @@ export function yardenize(cargos: Array<Cargo>): Array<Cargo> {
     ) {
       while (
         operators.length > 0 &&
-        (getPrecedence(operators[operators.length - 1].value) >= getPrecedence(cargos[cargoIndex].value as string))
+        checkIfOperator(cargos[cargoIndex] as Token) &&
+        (getPrecedence(operators[operators.length - 1].value) >= getPrecedence((cargos[cargoIndex] as Token).value))
       ) {
         output.push(operators.pop()!)
       }
+      
       operators.push(cargos[cargoIndex] as Token)
     } else {
       while (operators.length > 0) {
         output.push(operators.pop()!)
-      }
+      } 
     }
     cargoIndex++
   }
+
+  while (operators.length > 0) {
+    output.push(operators.pop()!)
+  } 
 
   return output
 }

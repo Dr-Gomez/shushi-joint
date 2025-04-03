@@ -6,12 +6,7 @@ import { parse } from "./4-parser/parser.ts";
 
 function main(): void {
   const inputCode = `
-    {
-      int hello <- 4;
-    }
-
-    (())
-    (num: 2)
+    2 * 5
   `;
 
   let tokens: Array<Token>;
