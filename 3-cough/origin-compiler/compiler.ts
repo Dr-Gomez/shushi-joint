@@ -6,7 +6,7 @@ import { parse } from "./4-parser/parser.ts";
 
 function main(): void {
   const inputCode = `
-    2 * 5
+    (2 * 5) / 2
   `;
 
   let tokens: Array<Token>;
@@ -16,8 +16,6 @@ function main(): void {
   let cargo: Array<Cargo> = compact(tokens)
   console.log(cargo)
 
-  cargo = yardenize(cargo);
-  console.log(cargo)
 
   // // let nodes: Array<Node>;
   // // nodes = parse(tokens)

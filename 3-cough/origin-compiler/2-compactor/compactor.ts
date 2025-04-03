@@ -26,10 +26,8 @@ function handleEncapsulator(tokens: Array<Token>, index: number): BoxWrapper {
   const innerBox = encapsulate(tokens, index + 1)
   const box = innerBox.box
 
-  index = innerBox.index
-
   outBox = {value: box.value, type: box.type}
-  return {box: outBox, index: index}
+  return {box: outBox, index: innerBox.index}
 }
 
 function encapsulate(tokens: Array<Token>, index?: number): BoxWrapper {
@@ -77,7 +75,8 @@ function encapsulate(tokens: Array<Token>, index?: number): BoxWrapper {
 
     if (jumpBox) {
       boxesOut.push(jumpBox.box)
-      index = ++jumpBox.index
+      index = jumpBox.index + 1
+      jumpBox = null
     } else {
       boxesOut.push(tokens[index])
       ++index;
