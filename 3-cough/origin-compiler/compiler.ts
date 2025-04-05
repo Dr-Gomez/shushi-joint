@@ -6,9 +6,7 @@ import { parse } from "./4-parser/parser.ts";
 
 function main(): void {
   const inputCode = `
-    met <- false;
-    condition <~ true;
-    22 * (met or true) - 22
+    not num - num
   `;
 
   console.log("TOKENIZED: ")

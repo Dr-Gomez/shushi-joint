@@ -1,41 +1,54 @@
 import { Token, TokenType } from "../1-lexer/lexer.ts";
 
+export enum Affix {
+  PREFIX,
+  INFIX,
+  SUFFIX
+}
+
 interface OperatorInterface {
   operator: string;
   precedence: number;
+  affix: Affix
 }
 
 const precedenceDictionary: OperatorInterface[] = [
-  { operator: "<->", precedence: 0 },
-  { operator: "<-", precedence: 0 },
-  { operator: "<~", precedence: 0},
-  { operator: "<~>", precedence: 0},
-  { operator: ":", precedence: 0 },
-  { operator: "and", precedence: 1 },
-  { operator: "or", precedence: 1 },
-  { operator: "not", precedence: 1 },
-  { operator: "=", precedence: 2 },
-  { operator: "<", precedence: 2 },
-  { operator: ">", precedence: 2 },
-  { operator: "+", precedence: 3 },
-  { operator: "-", precedence: 3 },
-  { operator: "*", precedence: 3 },
-  { operator: "/", precedence: 3 },
-  { operator: "%", precedence: 3 },
-  { operator: "<<<", precedence: 3 },
-  { operator: ">>>", precedence: 3 },
-  { operator: "&", precedence: 3 },
-  { operator: "|", precedence: 3 },
-  { operator: "^", precedence: 3 },
-  { operator: "++", precedence: 4 },
-  { operator: "--", precedence: 4 },
-  { operator: "~~", precedence: 4 },
-  { operator: "!!", precedence: 4 },
+  { operator: "<->", precedence: 0, affix: Affix.INFIX},
+  { operator: "<-", precedence: 0 , affix: Affix.INFIX},
+  { operator: "<~>", precedence: 0, affix: Affix.INFIX},
+  { operator: "<~", precedence: 0, affix: Affix.INFIX},
+  { operator: ":", precedence: 0, affix: Affix.INFIX },
+  { operator: "and", precedence: 1, affix: Affix.INFIX },
+  { operator: "or", precedence: 1, affix: Affix.INFIX },
+  { operator: "=", precedence: 2, affix: Affix.INFIX },
+  { operator: "<", precedence: 2, affix: Affix.INFIX },
+  { operator: ">", precedence: 2, affix: Affix.INFIX },
+  { operator: "+", precedence: 3, affix: Affix.INFIX },
+  { operator: "-", precedence: 3, affix: Affix.INFIX },
+  { operator: "*", precedence: 3, affix: Affix.INFIX },
+  { operator: "/", precedence: 3, affix: Affix.INFIX },
+  { operator: "%", precedence: 3, affix: Affix.INFIX },
+  { operator: "<<<", precedence: 3, affix: Affix.INFIX },
+  { operator: ">>>", precedence: 3, affix: Affix.INFIX },
+  { operator: "&", precedence: 3, affix: Affix.INFIX },
+  { operator: "|", precedence: 3, affix: Affix.INFIX },
+  { operator: "^", precedence: 3, affix: Affix.INFIX },
+  { operator: "++", precedence: 4, affix: Affix.SUFFIX },
+  { operator: "--", precedence: 4, affix: Affix.SUFFIX },
+  { operator: "~~", precedence: 4, affix: Affix.SUFFIX },
+  { operator: "!!", precedence: 4, affix: Affix.SUFFIX },
+  { operator: "not", precedence: 4, affix: Affix.PREFIX },
 ];
 
 export function getPrecedence(operator: string): number {
   const op = precedenceDictionary.find((entry) => entry.operator === operator);
   return op ? op.precedence : -1;
+}
+
+
+export function getAffix(operator: string): number {
+  const op = precedenceDictionary.find((entry) => entry.operator === operator)
+  return op ? op.affix : -1
 }
 
 export function checkIfOperator(token: Token): Boolean {
