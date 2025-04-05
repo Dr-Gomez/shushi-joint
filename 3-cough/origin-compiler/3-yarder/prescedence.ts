@@ -8,6 +8,8 @@ interface OperatorInterface {
 const precedenceDictionary: OperatorInterface[] = [
   { operator: "<->", precedence: 0 },
   { operator: "<-", precedence: 0 },
+  { operator: "<~", precedence: 0},
+  { operator: "<~>", precedence: 0},
   { operator: ":", precedence: 0 },
   { operator: "and", precedence: 1 },
   { operator: "or", precedence: 1 },
