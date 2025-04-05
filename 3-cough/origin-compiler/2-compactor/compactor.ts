@@ -49,11 +49,11 @@ function encapsulate(tokens: Array<Token>, index?: number): BoxWrapper {
       if (tokens[index].value === ";" && typeLevel < 3) {
         type = BoxType.CONTEXT_SCOPE
         typeLevel = 3;
-      } else if (tokens[index].value === ":" && typeLevel < 2) {
-        type = BoxType.ARGUMENT_SCOPE
-        typeLevel = 2;
-      } else if (tokens[index].value === "," && typeLevel < 1) {
+      } else if (tokens[index].value === "," && typeLevel < 2) {
         type = BoxType.PARAMETER_SCOPE
+        typeLevel = 2;
+      } else if (tokens[index].value === ":" && typeLevel < 1) {
+        type = BoxType.ARGUMENT_SCOPE
         typeLevel = 1;
       }
     }
