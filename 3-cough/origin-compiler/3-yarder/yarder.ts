@@ -12,13 +12,14 @@ export function yardenize(cargos: Array<Cargo>): Array<Cargo> {
       cargos[cargoIndex].type === BoxType.ARGUMENT_SCOPE || cargos[cargoIndex].type === BoxType.CONTEXT_SCOPE || 
       cargos[cargoIndex].type === BoxType.OPERATOR_SCOPE || cargos[cargoIndex].type === BoxType.PARAMETER_SCOPE
     ) {
+      console.log(cargos[cargoIndex].value)
       const yard = yardenize(cargos[cargoIndex].value as Array<Box>)
       const cargo: Box = {value: yard, type: cargos[cargoIndex].type as BoxType}
       output.push(cargo)
     } else if (
       cargos[cargoIndex].type === TokenType.INT_NUM || cargos[cargoIndex].type === TokenType.REAL_NUM ||
       cargos[cargoIndex].type === TokenType.IDENTIFIER || cargos[cargoIndex].type ===  TokenType.STRING ||
-      cargos[cargoIndex].type === BoxType.VOID_SCOPE
+      cargos[cargoIndex].type === TokenType.BOOL || cargos[cargoIndex].type === BoxType.VOID_SCOPE
     ) {
       output.push(cargos[cargoIndex])
     } else if (
