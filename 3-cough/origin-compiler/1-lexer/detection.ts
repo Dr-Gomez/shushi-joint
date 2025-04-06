@@ -80,6 +80,7 @@ const operators: Array<string> = [
   "*",
   "/",
   "%",
+  "$",
   "&",
   "|",
   "^",
@@ -98,7 +99,7 @@ function isWhitespace(char: string) {
   return whitespaces.includes(char);
 }
 
-const comment = "$";
+const comment = "#";
 function isComment(char: string) {
   return comment == char;
 }
