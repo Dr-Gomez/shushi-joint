@@ -1,6 +1,6 @@
 import { Token, TokenType } from "../1-lexer/lexer.ts";
 import { Box, BoxType, Cargo } from "../2-compactor/compactor.ts";
-import { Affix, checkIfOperator, getAffix, getPrecedence } from "./prescedence.ts";
+import { Affix, checkIfOperator, getAffix, getAssociativity, getPrecedence } from "./precedence.ts";
 
 export function yardenize(cargos: Array<Cargo>): Array<Cargo> {
   let cargoIndex = 0;
@@ -36,7 +36,7 @@ export function yardenize(cargos: Array<Cargo>): Array<Cargo> {
         while (
           operators.length > 0 &&
           checkIfOperator(cargo as Token) &&
-          (getPrecedence(operators[operators.length - 1].value) >= getPrecedence((cargo as Token).value))
+          (getPrecedence(operators[operators.length - 1].value) >= getPrecedence((cargo as Token).value) + getAssociativity((cargo as Token).value))
         ) {
           output.push(operators.pop()!)
         }

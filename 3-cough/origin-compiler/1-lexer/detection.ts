@@ -129,7 +129,7 @@ function isSelectionKeyword(token: string) {
   return selectionKeywords.includes(token);
 }
 
-const sequencingKeywords: Array<string> = ["rift", "warp"];
+const sequencingKeywords: Array<string> = ["gateway", "warp"];
 function isSequencingKeyword(token: string) {
   return sequencingKeywords.includes(token);
 }
