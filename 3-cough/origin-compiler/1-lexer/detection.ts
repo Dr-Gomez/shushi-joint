@@ -51,6 +51,7 @@ const alpha: Array<string> = [
   "X",
   "Y",
   "Z",
+  "_"
 ];
 
 function isAlpha(char: string) {
