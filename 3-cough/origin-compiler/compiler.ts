@@ -6,24 +6,24 @@ import { parse } from "./4-parser/parser.ts";
 
 function main(): void {
   const inputCode = `
-    22 <<< 2 <<< 2
+    not 1!!
   `;
 
-  console.log("TOKENIZED: ")
+  console.log("TOKENIZED: ");
   let tokens: Array<Token>;
   tokens = tokenize(inputCode);
-  console.log(tokens)
-  console.log("-".repeat(80))
+  console.log(tokens);
+  console.log("-".repeat(80));
 
-  console.log("COMPACTED:")
-  let cargo: Array<Cargo> = compact(tokens)
-  console.log(cargo)
-  console.log("-".repeat(80))
+  console.log("COMPACTED:");
+  let cargo: Array<Cargo> = compact(tokens);
+  console.log(cargo);
+  console.log("-".repeat(80));
 
-  console.log("YARDED:")
+  console.log("YARDED:");
   cargo = yardenize(cargo);
-  console.log(cargo)
-  console.log("-".repeat(80))
+  console.log(cargo);
+  console.log("-".repeat(80));
 
   // // let nodes: Array<Node>;
   // // nodes = parse(tokens)

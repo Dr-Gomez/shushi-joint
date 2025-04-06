@@ -40,7 +40,7 @@ export enum TokenType {
   LOGICAL_OPERATOR,
   IO_KEYWORD,
   ERROR,
-  length
+  length,
 }
 
 export interface Token {

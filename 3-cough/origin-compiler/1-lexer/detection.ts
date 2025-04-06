@@ -88,7 +88,7 @@ const operators: Array<string> = [
   "=",
   "!",
   "$",
-  "~"
+  "~",
 ];
 function isOperator(char: string) {
   return operators.includes(char);

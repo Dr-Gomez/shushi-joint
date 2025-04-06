@@ -8,7 +8,7 @@ export enum BoxType {
   VOID_SCOPE = TokenType.length + 4,
 }
 
-export type Cargo = Box | Token 
+export type Cargo = Box | Token;
 
 export interface Box {
   value: Array<Cargo>;
@@ -23,11 +23,11 @@ interface BoxWrapper {
 function handleEncapsulator(tokens: Array<Token>, index: number): BoxWrapper {
   let outBox: Box;
 
-  const innerBox = encapsulate(tokens, index + 1)
-  const box = innerBox.box
+  const innerBox = encapsulate(tokens, index + 1);
+  const box = innerBox.box;
 
-  outBox = {value: box.value, type: box.type}
-  return {box: outBox, index: innerBox.index}
+  outBox = { value: box.value, type: box.type };
+  return { box: outBox, index: innerBox.index };
 }
 
 function encapsulate(tokens: Array<Token>, index?: number): BoxWrapper {
@@ -47,50 +47,49 @@ function encapsulate(tokens: Array<Token>, index?: number): BoxWrapper {
   while (index < tokens.length) {
     if (tokens[index].type === TokenType.SEPARATOR) {
       if (tokens[index].value === ";" && typeLevel < 3) {
-        type = BoxType.CONTEXT_SCOPE
+        type = BoxType.CONTEXT_SCOPE;
         typeLevel = 3;
       } else if (tokens[index].value === "," && typeLevel < 2) {
-        type = BoxType.PARAMETER_SCOPE
+        type = BoxType.PARAMETER_SCOPE;
         typeLevel = 2;
       } else if (tokens[index].value === ":" && typeLevel < 1) {
-        type = BoxType.ARGUMENT_SCOPE
+        type = BoxType.ARGUMENT_SCOPE;
         typeLevel = 1;
       }
     }
 
     if (tokens[index].type === TokenType.RIGHT_ENCAPSULATOR) {
-
-      if(startIndex === index) {
-        const box: Box = {value: boxesOut, type: BoxType.VOID_SCOPE}
-        return {box: box, index: index}
+      if (startIndex === index) {
+        const box: Box = { value: boxesOut, type: BoxType.VOID_SCOPE };
+        return { box: box, index: index };
       }
 
-      const box: Box = {value: boxesOut, type: type}
-      return {box: box, index: index}
+      const box: Box = { value: boxesOut, type: type };
+      return { box: box, index: index };
     }
 
     if (tokens[index].type === TokenType.LEFT_ENCAPSULATOR) {
-      jumpBox = handleEncapsulator(tokens, index)
+      jumpBox = handleEncapsulator(tokens, index);
     }
 
     if (jumpBox) {
-      boxesOut.push(jumpBox.box)
-      index = jumpBox.index + 1
-      jumpBox = null
+      boxesOut.push(jumpBox.box);
+      index = jumpBox.index + 1;
+      jumpBox = null;
     } else {
-      boxesOut.push(tokens[index])
+      boxesOut.push(tokens[index]);
       ++index;
     }
   }
 
-  const box: Box = {value: boxesOut, type: BoxType.CONTEXT_SCOPE}
-  return {box: box, index: index}
+  const box: Box = { value: boxesOut, type: BoxType.CONTEXT_SCOPE };
+  return { box: box, index: index };
 }
 
 export function compact(tokens: Array<Token>): Array<Cargo> {
   let outBox: Box;
 
-  outBox = encapsulate(tokens).box
+  outBox = encapsulate(tokens).box;
 
-  return outBox.value
+  return outBox.value;
 }
