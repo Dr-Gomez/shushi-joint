@@ -58,6 +58,9 @@ export function yardenize(cargos: Array<Cargo>): Array<Cargo> {
 
         operators.push(cargo as Token);
       }
+    } else if (cargo.type === TokenType.COMMENT) {
+      cargoIndex++;
+      continue
     } else {
       while (operators.length > 0) {
         output.push(operators.pop()!);

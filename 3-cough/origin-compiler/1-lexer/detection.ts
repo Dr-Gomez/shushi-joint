@@ -87,16 +87,20 @@ const operators: Array<string> = [
   "<",
   "=",
   "!",
-  "$",
   "~",
 ];
 function isOperator(char: string) {
   return operators.includes(char);
 }
 
-const whitespaces: Array<string> = [" ", "\n", "\r", "\v"];
+const whitespaces: Array<string> = [" ", "\n", "\r"];
 function isWhitespace(char: string) {
   return whitespaces.includes(char);
+}
+
+const comment = "$";
+function isComment(char: string) {
+  return comment == char;
 }
 
 const strings: Array<string> = ["'", "`", '"'];
@@ -139,7 +143,7 @@ function isAssignmentOperator(token: string) {
   return assignmentOperators.includes(token);
 }
 
-const arithmeticOperators: Array<string> = ["+", "-", "*", "/", "%"];
+const arithmeticOperators: Array<string> = ["+", "-", "*", "/", "//" , "%"];
 function isArithmeticOperator(token: string) {
   return arithmeticOperators.includes(token);
 }
@@ -180,6 +184,7 @@ export {
   isAssignmentOperator,
   isBinaryOperator,
   isBoolKeyword,
+  isComment,
   isDigit,
   isEncapsulator,
   isIoKeyword,

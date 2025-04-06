@@ -6,7 +6,7 @@ import { parse } from "./4-parser/parser.ts";
 
 function main(): void {
   const inputCode = `
-    not 1!!
+    $$ wow I've got comments
   `;
 
   console.log("TOKENIZED: ");
