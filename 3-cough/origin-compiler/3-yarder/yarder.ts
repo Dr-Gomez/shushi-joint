@@ -1,4 +1,4 @@
-import { Token, TokenType } from "../1-lexer/lexer.ts";
+import { Token, TokenType } from "../1-lexer/tokens.ts";
 import { Box, BoxType, Cargo } from "../2-compactor/compactor.ts";
 import {
   Affix,
@@ -26,14 +26,15 @@ export function yardenize(cargos: Array<Cargo>): Array<Cargo> {
       const outCargo: Box = { value: yard, type: cargo.type as BoxType };
       output.push(outCargo);
     } else if (
-      cargo.type === TokenType.INT_NUM || cargo.type === TokenType.REAL_NUM ||
-      cargo.type === TokenType.IDENTIFIER || cargo.type === TokenType.STRING ||
-      cargo.type === TokenType.BOOL || cargo.type === BoxType.VOID_SCOPE
+      cargo.type === TokenType.INT_NUM ||
+      cargo.type === TokenType.REAL_NUM ||
+      cargo.type === TokenType.IDENTIFIER ||
+      cargo.type === TokenType.STRING ||
+      cargo.type === TokenType.BOOL ||
+      cargo.type === BoxType.VOID_SCOPE
     ) {
       output.push(cargo);
-    } else if (
-      checkIfOperator(cargo as Token)
-    ) {
+    } else if (checkIfOperator(cargo as Token)) {
       const operator = cargo as Token;
       const affix = getAffix(operator.value);
 
@@ -45,10 +46,8 @@ export function yardenize(cargos: Array<Cargo>): Array<Cargo> {
         while (
           operators.length > 0 &&
           checkIfOperator(cargo as Token) &&
-          (
-              getPrecedence(operators[operators.length - 1].value) +
-              getArity((cargo as Token).value)
-            ) >=
+          getPrecedence(operators[operators.length - 1].value) +
+                getArity((cargo as Token).value) >=
             getPrecedence((cargo as Token).value) +
               getArity((cargo as Token).value) +
               getAssociativity((cargo as Token).value)

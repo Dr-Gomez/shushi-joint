@@ -1,3 +1,5 @@
+import { NumberBase } from "../1-lexer/tokens.ts";
+
 enum NodeType {
   NUMBER,
   STRING,
@@ -6,13 +8,6 @@ enum NodeType {
   BINARY_OPERATOR,
   UNARY_OPERATOR,
   ERROR,
-}
-
-enum NumberBase {
-  BIN,
-  OCT,
-  DEC,
-  HEXA,
 }
 
 interface Node {
@@ -50,7 +45,7 @@ interface IdentifierNode extends Node {
 interface BinaryOperatorNode extends Node {
   type: NodeType.BINARY_OPERATOR;
   leftOperand: Node;
-  RightOperand: Node;
+  rightOperand: Node;
   value: string;
 }
 

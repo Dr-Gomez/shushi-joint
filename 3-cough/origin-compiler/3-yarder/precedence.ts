@@ -1,4 +1,4 @@
-import { Token, TokenType } from "../1-lexer/lexer.ts";
+import { Token, TokenType } from "../1-lexer/tokens.ts";
 
 export enum Affix {
   PREFIX,

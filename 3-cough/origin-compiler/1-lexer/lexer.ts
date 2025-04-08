@@ -2,6 +2,7 @@ import {
   isAlpha,
   isArithmeticOperator,
   isAssignmentOperator,
+  isBase,
   isBinaryOperator,
   isBoolKeyword,
   isComment,
@@ -20,35 +21,7 @@ import {
   isUnaryOperator,
   isWhitespace,
 } from "./detection.ts";
-
-export enum TokenType {
-  BOOL = 0,
-  INT_NUM,
-  REAL_NUM,
-  STRING,
-  IDENTIFIER,
-  LEFT_ENCAPSULATOR,
-  RIGHT_ENCAPSULATOR,
-  SEPARATOR,
-  TYPE,
-  SELECTION_KEYWORD,
-  SEQUENCING_KEYWORD,
-  ASSIGNMENT_OPERATOR,
-  ARITHMETIC_OPERATOR,
-  BINARY_OPERATOR,
-  UNARY_OPERATOR,
-  LOGICAL_KEYWORD,
-  LOGICAL_OPERATOR,
-  IO_KEYWORD,
-  ERROR,
-  COMMENT,
-  length,
-}
-
-export interface Token {
-  value: string;
-  type: TokenType;
-}
+import { NumberBase, NumberToken, Token, TokenType } from "./tokens.ts";
 
 interface TokenWrapper {
   token: Token;
@@ -131,22 +104,54 @@ function handleOperator(input: string, index: number): TokenWrapper {
 }
 
 function handleNumbers(input: string, index: number): TokenWrapper {
-  let outToken: Token | undefined;
+  let startIndex = index;
+  index++;
 
-  const startIndex = index;
+  let base: NumberBase;
 
-  if (
-    input[startIndex] == "0" && !isDigit(input[startIndex + 1]) &&
-    !isWhitespace(input[startIndex + 1])
-  ) {
-    index += 2;
+  if (index < input.length && input[startIndex] == "0" && isAlpha[startIndex]) {
+    switch (input[index]) {
+      case "b":
+        base = NumberBase.BIN;
+        break;
+      case "q":
+        base = NumberBase.QUD;
+        break;
+      case "o":
+        base: NumberBase.OCT;
+        break;
+      case "x":
+        base: NumberBase.HEX;
+        break;
+      default:
+        let outToken: Token = {
+          value: "Number base not recognized",
+          type: TokenType.ERROR,
+        };
+        return { token: outToken, index: index };
+    }
+    startIndex += 2;
+    index++;
+  } else {
+    base = NumberBase.DEC;
   }
 
   let type: TokenType = TokenType.INT_NUM;
 
-  while (isDigit(input[index])) {
-    if (input[index] == ".") {
+  while (index < input.length) {
+    if (type === TokenType.INT_NUM && input[index] === ".") {
       type = TokenType.REAL_NUM;
+      index++;
+      continue;
+    } else if (input[index] === ".") {
+      let outToken: Token = {
+        value: "Can't have more than one radix point per number",
+        type: TokenType.ERROR,
+      };
+    }
+
+    if (!isDigit(input[index])) {
+      break;
     }
 
     index++;
@@ -155,7 +160,7 @@ function handleNumbers(input: string, index: number): TokenWrapper {
   const number: string = input.substring(startIndex, index);
   index--;
 
-  outToken = { value: number, type: type };
+  let outToken: NumberToken = { value: number, base: base!, type: type };
   return { token: outToken, index: index };
 }
 
@@ -217,7 +222,9 @@ function handleComment(input: string, index: number): TokenWrapper {
     index += 2;
     const startIndex = index;
     while (
-      input[index] !== "\n" && input[index] !== "\r" && index < input.length
+      input[index] !== "\n" &&
+      input[index] !== "\r" &&
+      index < input.length
     ) {
       index++;
     }
@@ -243,8 +250,12 @@ function handleComment(input: string, index: number): TokenWrapper {
 function handleError(input: string, index: number): TokenWrapper {
   function isConstruct(char: string) {
     if (
-      isDigit(char) || isAlpha(char) || isOperator(char) || isString(char) ||
-      isEncapsulator(char) || isWhitespace(char)
+      isDigit(char) ||
+      isAlpha(char) ||
+      isOperator(char) ||
+      isString(char) ||
+      isEncapsulator(char) ||
+      isWhitespace(char)
     ) {
       return true;
     }
@@ -256,9 +267,7 @@ function handleError(input: string, index: number): TokenWrapper {
   const startIndex = index;
   index++;
 
-  while (
-    !isConstruct(input[index]) && index < input.length
-  ) {
+  while (!isConstruct(input[index]) && index < input.length) {
     index++;
   }
 

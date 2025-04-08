@@ -1,4 +1,4 @@
-import { Token, TokenType } from "../1-lexer/lexer.ts";
+import { NumberToken, Token, TokenType } from "../1-lexer/tokens.ts";
 import { Cargo } from "../2-compactor/compactor.ts";
 import {
   BinaryOperatorNode,
@@ -32,29 +32,16 @@ function handleBool(tokens: Array<Token>, index: number) {
 function handleNumber(tokens: Array<Token>, index: number) {
   let outNode: NumberNode;
 
-  let base: NumberBase;
+  let tokenValue = tokens[index] as NumberToken;
   let value: number;
 
-  let startIndex = 2;
-  if (tokens[index].value[1] == "b") {
-    base = NumberBase.BIN;
-  } else if (tokens[index].value[1] == "o") {
-    base = NumberBase.OCT;
-  } else if (tokens[index].value[1] == "x") {
-    base = NumberBase.HEXA;
-  } else {
-    startIndex = 0;
-    base = NumberBase.DEC;
-  }
-
   if (tokens[index].type === TokenType.INT_NUM) {
-    value = parseInt(tokens[index].value.slice(startIndex));
+    value = parseInt(tokenValue.value);
   } else {
-    value = parseFloat(tokens[index].value.slice(startIndex));
+    value = parseFloat(tokenValue.value);
   }
 
-  outNode = { value: value, base: base, type: NodeType.NUMBER };
-
+  outNode = { value: value, base: tokenValue.base, type: NodeType.NUMBER };
   return { node: outNode, index: index };
 }
 
@@ -86,7 +73,7 @@ function handleOperator(tokens: Array<Token>, index: number) {
 
   outNode = {
     value: operator,
-    RightOperand: nodesOut.pop()!,
+    rightOperand: nodesOut.pop()!,
     leftOperand: nodesOut.pop()!,
     type: NodeType.BINARY_OPERATOR,
   };

@@ -69,10 +69,14 @@ const digits: Array<string> = [
   "7",
   "8",
   "9",
-  ".",
 ];
 function isDigit(char: string) {
   return digits.includes(char);
+}
+
+const base = ["b", "o", "x"];
+function isBase(char: string) {
+  return base.includes(char);
 }
 
 const operators: Array<string> = [
@@ -155,7 +159,7 @@ function isBinaryOperator(token: string) {
   return binaryOperators.includes(token);
 }
 
-const unaryOperators: Array<string> = ["!!", "$$", "++", "--"];
+const unaryOperators: Array<string> = ["!", "++", "--"];
 function isUnaryOperator(token: string) {
   return unaryOperators.includes(token);
 }
@@ -184,6 +188,7 @@ export {
   isAlpha,
   isArithmeticOperator,
   isAssignmentOperator,
+  isBase,
   isBinaryOperator,
   isBoolKeyword,
   isComment,
