@@ -2,8 +2,7 @@ import {
   isAlpha,
   isArithmeticOperator,
   isAssignmentOperator,
-  isBase,
-  isBinaryOperator,
+  isBitwiseOperator,
   isBoolKeyword,
   isComment,
   isDigit,
@@ -82,7 +81,7 @@ function handleOperator(input: string, index: number): TokenWrapper {
   const TypeFunctionPairs: Array<TypeFunction> = [
     { type: TokenType.ASSIGNMENT_OPERATOR, func: isAssignmentOperator },
     { type: TokenType.ARITHMETIC_OPERATOR, func: isArithmeticOperator },
-    { type: TokenType.BINARY_OPERATOR, func: isBinaryOperator },
+    { type: TokenType.BITWISE_OPERATOR, func: isBitwiseOperator },
     { type: TokenType.UNARY_OPERATOR, func: isUnaryOperator },
     { type: TokenType.LOGICAL_OPERATOR, func: isLogicalOperator },
   ];
@@ -90,7 +89,7 @@ function handleOperator(input: string, index: number): TokenWrapper {
   const startIndex: number = index;
   index++;
 
-  while (isOperator(input[index])) {
+  while (index < input.length && isOperator(input[index])) {
     index++;
   }
 
@@ -125,10 +124,10 @@ function handleNumbers(input: string, index: number): TokenWrapper {
         base = NumberBase.QUD;
         break;
       case "o":
-        base: NumberBase.OCT;
+        base = NumberBase.OCT;
         break;
       case "x":
-        base: NumberBase.HEX;
+        base = NumberBase.HEX;
         break;
       default:
         let outToken: Token = {

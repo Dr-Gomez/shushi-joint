@@ -110,7 +110,7 @@ export function parse(cargos: Array<Cargo>) {
     } else if (cargos[index].type === TokenType.IDENTIFIER) {
       jumpNode = handleIdentifier(cargos as Token[], index);
     } else if (
-      cargos[index].type === TokenType.BINARY_OPERATOR ||
+      cargos[index].type === TokenType.BITWISE_OPERATOR ||
       cargos[index].type === TokenType.ARITHMETIC_OPERATOR
     ) {
       jumpNode = handleOperator(cargos as Token[], index);

@@ -74,11 +74,6 @@ function isDigit(char: string) {
   return digits.includes(char);
 }
 
-const base = ["b", "o", "x"];
-function isBase(char: string) {
-  return base.includes(char);
-}
-
 const operators: Array<string> = [
   "+",
   "-",
@@ -154,9 +149,9 @@ function isArithmeticOperator(token: string) {
   return arithmeticOperators.includes(token);
 }
 
-const binaryOperators: Array<string> = ["&", "|", "^", "<<<", ">>>", "><"];
-function isBinaryOperator(token: string) {
-  return binaryOperators.includes(token);
+const bitwiseOperators: Array<string> = ["&", "|", "^", "<<<", ">>>", "><"];
+function isBitwiseOperator(token: string) {
+  return bitwiseOperators.includes(token);
 }
 
 const unaryOperators: Array<string> = ["!!", "++", "--"];
@@ -188,8 +183,7 @@ export {
   isAlpha,
   isArithmeticOperator,
   isAssignmentOperator,
-  isBase,
-  isBinaryOperator,
+  isBitwiseOperator,
   isBoolKeyword,
   isComment,
   isDigit,
