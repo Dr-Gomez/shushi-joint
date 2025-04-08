@@ -1,4 +1,5 @@
-import { Token, tokenize } from "./1-lexer/lexer.ts";
+import { tokenize } from "./1-lexer/lexer.ts";
+import { Token } from "./1-lexer/tokens.ts";
 import { Cargo, compact } from "./2-compactor/compactor.ts";
 import { yardenize } from "./3-yarder/yarder.ts";
 import { Node } from "./4-parser/nodes.ts";
@@ -6,7 +7,7 @@ import { parse } from "./4-parser/parser.ts";
 
 function main(): void {
   const inputCode = `
-    2 + 2
+    "the big bulldog like fries"
   `;
 
   console.log("TOKENIZED: ");

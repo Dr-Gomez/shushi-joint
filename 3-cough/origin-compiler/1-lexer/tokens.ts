@@ -41,4 +41,16 @@ interface NumberToken extends Token {
   base: NumberBase;
 }
 
-export { NumberBase, NumberToken, Token, TokenType };
+enum StringLevel {
+  CHAR = 0,
+  LITERAL = 1,
+  TEMPLATE = 2,
+}
+
+interface StringToken extends Token {
+  value: string;
+  type: TokenType.STRING;
+  level: StringLevel;
+}
+
+export { NumberBase, NumberToken, StringLevel, StringToken, Token, TokenType };

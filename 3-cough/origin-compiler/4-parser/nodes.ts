@@ -1,4 +1,4 @@
-import { NumberBase } from "../1-lexer/tokens.ts";
+import { NumberBase, StringLevel } from "../1-lexer/tokens.ts";
 
 enum NodeType {
   NUMBER,
@@ -33,6 +33,7 @@ interface NumberNode extends Node {
 
 interface StringNode extends Node {
   type: NodeType.STRING;
+  level: StringLevel;
   value: string;
 }
 

@@ -21,7 +21,14 @@ import {
   isUnaryOperator,
   isWhitespace,
 } from "./detection.ts";
-import { NumberBase, NumberToken, Token, TokenType } from "./tokens.ts";
+import {
+  NumberBase,
+  NumberToken,
+  StringLevel,
+  StringToken,
+  Token,
+  TokenType,
+} from "./tokens.ts";
 
 interface TokenWrapper {
   token: Token;
@@ -165,24 +172,38 @@ function handleNumbers(input: string, index: number): TokenWrapper {
 }
 
 function handleStrings(input: string, index: number): TokenWrapper {
-  let outToken: Token | undefined;
-
   const stringKey = input[index];
-  const startIndex = index;
+  let level: StringLevel;
+  switch (stringKey) {
+    case "`":
+      level = StringLevel.TEMPLATE;
+      break;
+    case '"':
+      level = StringLevel.LITERAL;
+      break;
+    default:
+      level = StringLevel.CHAR;
+      break;
+  }
+
   index++;
+  const startIndex = index;
 
   while (input[index] !== stringKey && index < input.length) {
     index++;
   }
-  index++;
 
   const content = input.substring(startIndex, index);
-  index--;
 
+  let outToken: Token;
   if (index == input.length) {
     outToken = { value: content, type: TokenType.ERROR };
   } else {
-    outToken = { value: content, type: TokenType.STRING };
+    outToken = {
+      value: content,
+      level: level,
+      type: TokenType.STRING,
+    } as StringToken;
   }
 
   return { token: outToken, index: index };

@@ -1,4 +1,9 @@
-import { NumberToken, Token, TokenType } from "../1-lexer/tokens.ts";
+import {
+  NumberToken,
+  StringToken,
+  Token,
+  TokenType,
+} from "../1-lexer/tokens.ts";
 import { Cargo } from "../2-compactor/compactor.ts";
 import {
   BinaryOperatorNode,
@@ -32,26 +37,25 @@ function handleBool(tokens: Array<Token>, index: number) {
 function handleNumber(tokens: Array<Token>, index: number) {
   let outNode: NumberNode;
 
-  let tokenValue = tokens[index] as NumberToken;
+  let token = tokens[index] as NumberToken;
   let value: number;
 
   if (tokens[index].type === TokenType.INT_NUM) {
-    value = parseInt(tokenValue.value);
+    value = parseInt(token.value);
   } else {
-    value = parseFloat(tokenValue.value);
+    value = parseFloat(token.value);
   }
 
-  outNode = { value: value, base: tokenValue.base, type: NodeType.NUMBER };
+  outNode = { value: value, base: token.base, type: NodeType.NUMBER };
   return { node: outNode, index: index };
 }
 
 function handleString(tokens: Array<Token>, index: number) {
   let outNode: StringNode;
 
-  let value = tokens[index].value;
-  value = value.slice(1, -1);
+  let token = tokens[index] as StringToken;
 
-  outNode = { value: value, type: NodeType.STRING };
+  outNode = { value: token.value, level: token.level, type: NodeType.STRING };
 
   return { node: outNode, index: index };
 }
