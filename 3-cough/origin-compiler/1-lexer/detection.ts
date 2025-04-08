@@ -51,7 +51,7 @@ const alpha: Array<string> = [
   "X",
   "Y",
   "Z",
-  "_"
+  "_",
 ];
 
 function isAlpha(char: string) {
@@ -145,7 +145,7 @@ function isAssignmentOperator(token: string) {
   return assignmentOperators.includes(token);
 }
 
-const arithmeticOperators: Array<string> = ["+", "-", "*", "/", "//" , "%"];
+const arithmeticOperators: Array<string> = ["+", "-", "*", "/", "//", "%"];
 function isArithmeticOperator(token: string) {
   return arithmeticOperators.includes(token);
 }

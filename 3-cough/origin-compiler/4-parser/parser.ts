@@ -1,5 +1,7 @@
 import { Token, TokenType } from "../1-lexer/lexer.ts";
+import { Cargo } from "../2-compactor/compactor.ts";
 import {
+  BinaryOperatorNode,
   BoolNode,
   IdentifierNode,
   Node,
@@ -9,6 +11,8 @@ import {
   NumberNode,
   StringNode,
 } from "./nodes.ts";
+
+const nodesOut: Array<Node> = [];
 
 function handleBool(tokens: Array<Token>, index: number) {
   let outNode: BoolNode;
@@ -75,6 +79,21 @@ function handleIdentifier(tokens: Array<Token>, index: number) {
   return { node: outNode, index: index };
 }
 
+function handleOperator(tokens: Array<Token>, index: number) {
+  let outNode: BinaryOperatorNode;
+
+  const operator = tokens[index].value;
+
+  outNode = {
+    value: operator,
+    RightOperand: nodesOut.pop()!,
+    leftOperand: nodesOut.pop()!,
+    type: NodeType.BINARY_OPERATOR,
+  };
+
+  return { node: outNode, index: index };
+}
+
 function handleError(tokens: Array<Token>, index: number) {
   let outNode: Node;
 
@@ -84,25 +103,28 @@ function handleError(tokens: Array<Token>, index: number) {
   return { node: outNode, index: index };
 }
 
-export function parse(tokens: Array<Token>) {
-  const nodesOut: Array<Node> = [];
-
+export function parse(cargos: Array<Cargo>) {
   let jumpNode: NodeWrapper;
   let index = 0;
-  while (index < tokens.length) {
-    if (tokens[index].type === TokenType.BOOL) {
-      jumpNode = handleBool(tokens, index);
+  while (index < cargos.length) {
+    if (cargos[index].type === TokenType.BOOL) {
+      jumpNode = handleBool(cargos as Token[], index);
     } else if (
-      tokens[index].type === TokenType.INT_NUM ||
-      tokens[index].type === TokenType.REAL_NUM
+      cargos[index].type === TokenType.INT_NUM ||
+      cargos[index].type === TokenType.REAL_NUM
     ) {
-      jumpNode = handleNumber(tokens, index);
-    } else if (tokens[index].type === TokenType.STRING) {
-      jumpNode = handleString(tokens, index);
-    } else if (tokens[index].type === TokenType.IDENTIFIER) {
-      jumpNode = handleIdentifier(tokens, index);
+      jumpNode = handleNumber(cargos as Token[], index);
+    } else if (cargos[index].type === TokenType.STRING) {
+      jumpNode = handleString(cargos as Token[], index);
+    } else if (cargos[index].type === TokenType.IDENTIFIER) {
+      jumpNode = handleIdentifier(cargos as Token[], index);
+    } else if (
+      cargos[index].type === TokenType.BINARY_OPERATOR ||
+      cargos[index].type === TokenType.ARITHMETIC_OPERATOR
+    ) {
+      jumpNode = handleOperator(cargos as Token[], index);
     } else {
-      jumpNode = handleError(tokens, index);
+      jumpNode = handleError(cargos as Token[], index);
     }
 
     index = ++jumpNode.index;

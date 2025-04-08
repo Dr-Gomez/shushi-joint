@@ -6,7 +6,7 @@ import { parse } from "./4-parser/parser.ts";
 
 function main(): void {
   const inputCode = `
-    not 1!!
+    2 + 2
   `;
 
   console.log("TOKENIZED: ");
@@ -25,9 +25,11 @@ function main(): void {
   console.log(cargo);
   console.log("-".repeat(80));
 
-  // // let nodes: Array<Node>;
-  // // nodes = parse(tokens)
-  // // console.log(nodes)
+  console.log("PARSED:");
+  let nodes: Array<Node>;
+  nodes = parse(cargo);
+  console.log(nodes);
+  console.log("-".repeat(80));
 }
 
 main();

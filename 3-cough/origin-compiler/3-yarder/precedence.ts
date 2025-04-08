@@ -3,7 +3,7 @@ import { Token, TokenType } from "../1-lexer/lexer.ts";
 export enum Affix {
   PREFIX,
   INFIX,
-  SUFFIX
+  SUFFIX,
 }
 
 export enum Arity {
@@ -25,40 +25,202 @@ interface OperatorInterface {
   associativity: Associativity;
 }
 
-let num = 0
+let num = 0;
 function count() {
   num++;
   return num;
 }
 
 const precedenceDictionary: OperatorInterface[] = [
-  { operator: "<->", precedence: num, affix: Affix.INFIX,     arity: Arity.BINARY, associativity: Associativity.RIGHT },
-  { operator: "<-",  precedence: num, affix: Affix.INFIX,     arity: Arity.BINARY, associativity: Associativity.RIGHT },
-  { operator: "<~>", precedence: num, affix: Affix.INFIX,     arity: Arity.BINARY, associativity: Associativity.RIGHT },
-  { operator: "<~",  precedence: num, affix: Affix.INFIX,     arity: Arity.BINARY, associativity: Associativity.RIGHT },
-  { operator: ":",   precedence: num, affix: Affix.INFIX,     arity: Arity.BINARY, associativity: Associativity.RIGHT },
-  { operator: "and", precedence: count(), affix: Affix.INFIX, arity: Arity.BINARY, associativity: Associativity.LEFT  },
-  { operator: "or",  precedence: num, affix: Affix.INFIX,     arity: Arity.BINARY, associativity: Associativity.LEFT  },
-  { operator: "not", precedence: num, affix: Affix.PREFIX,    arity: Arity.UNARY,  associativity: Associativity.NULL  },
-  { operator: "=",   precedence: num, affix: Affix.INFIX,     arity: Arity.BINARY, associativity: Associativity.LEFT  },
-  { operator: "~=",   precedence: num, affix: Affix.INFIX,     arity: Arity.BINARY, associativity: Associativity.LEFT  },
-  { operator: "!=",   precedence: num, affix: Affix.INFIX,     arity: Arity.BINARY, associativity: Associativity.LEFT  },
-  { operator: "<",   precedence: num, affix: Affix.INFIX,     arity: Arity.BINARY, associativity: Associativity.LEFT  },
-  { operator: ">",   precedence: num, affix: Affix.INFIX,     arity: Arity.BINARY, associativity: Associativity.LEFT  },
-  { operator: "+",   precedence: count(), affix: Affix.INFIX, arity: Arity.BINARY, associativity: Associativity.LEFT  },
-  { operator: "++",  precedence: num, affix: Affix.SUFFIX,    arity: Arity.UNARY,  associativity: Associativity.NULL  },
-  { operator: "-",   precedence: num, affix: Affix.INFIX,     arity: Arity.BINARY, associativity: Associativity.LEFT  },
-  { operator: "--",  precedence: num, affix: Affix.SUFFIX,    arity: Arity.UNARY,  associativity: Associativity.NULL  },
-  { operator: "*",   precedence: num, affix: Affix.INFIX,     arity: Arity.BINARY, associativity: Associativity.LEFT  },
-  { operator: "/",   precedence: num, affix: Affix.SUFFIX,    arity: Arity.UNARY,  associativity: Associativity.NULL  },
-  { operator: "%",  precedence: num, affix: Affix.INFIX,     arity: Arity.BINARY, associativity: Associativity.LEFT  },
-  { operator: "$",   precedence: num, affix: Affix.INFIX,     arity: Arity.BINARY, associativity: Associativity.LEFT  },
-  { operator: "<<<", precedence: num, affix: Affix.INFIX,     arity: Arity.BINARY, associativity: Associativity.RIGHT  },
-  { operator: ">>>", precedence: num, affix: Affix.INFIX,     arity: Arity.BINARY, associativity: Associativity.RIGHT  },
-  { operator: "&",   precedence: num, affix: Affix.INFIX,     arity: Arity.BINARY, associativity: Associativity.LEFT  },
-  { operator: "|",   precedence: num, affix: Affix.INFIX,     arity: Arity.BINARY, associativity: Associativity.LEFT  },
-  { operator: "^",   precedence: num, affix: Affix.INFIX,     arity: Arity.BINARY, associativity: Associativity.LEFT  },
-  { operator: "!!",  precedence: num, affix: Affix.SUFFIX,    arity: Arity.UNARY,  associativity: Associativity.NULL  },
+  {
+    operator: "<->",
+    precedence: num,
+    affix: Affix.INFIX,
+    arity: Arity.BINARY,
+    associativity: Associativity.RIGHT,
+  },
+  {
+    operator: "<-",
+    precedence: num,
+    affix: Affix.INFIX,
+    arity: Arity.BINARY,
+    associativity: Associativity.RIGHT,
+  },
+  {
+    operator: "<~>",
+    precedence: num,
+    affix: Affix.INFIX,
+    arity: Arity.BINARY,
+    associativity: Associativity.RIGHT,
+  },
+  {
+    operator: "<~",
+    precedence: num,
+    affix: Affix.INFIX,
+    arity: Arity.BINARY,
+    associativity: Associativity.RIGHT,
+  },
+  {
+    operator: ":",
+    precedence: num,
+    affix: Affix.INFIX,
+    arity: Arity.BINARY,
+    associativity: Associativity.RIGHT,
+  },
+  {
+    operator: "and",
+    precedence: count(),
+    affix: Affix.INFIX,
+    arity: Arity.BINARY,
+    associativity: Associativity.LEFT,
+  },
+  {
+    operator: "or",
+    precedence: num,
+    affix: Affix.INFIX,
+    arity: Arity.BINARY,
+    associativity: Associativity.LEFT,
+  },
+  {
+    operator: "not",
+    precedence: num,
+    affix: Affix.PREFIX,
+    arity: Arity.UNARY,
+    associativity: Associativity.NULL,
+  },
+  {
+    operator: "=",
+    precedence: num,
+    affix: Affix.INFIX,
+    arity: Arity.BINARY,
+    associativity: Associativity.LEFT,
+  },
+  {
+    operator: "~=",
+    precedence: num,
+    affix: Affix.INFIX,
+    arity: Arity.BINARY,
+    associativity: Associativity.LEFT,
+  },
+  {
+    operator: "!=",
+    precedence: num,
+    affix: Affix.INFIX,
+    arity: Arity.BINARY,
+    associativity: Associativity.LEFT,
+  },
+  {
+    operator: "<",
+    precedence: num,
+    affix: Affix.INFIX,
+    arity: Arity.BINARY,
+    associativity: Associativity.LEFT,
+  },
+  {
+    operator: ">",
+    precedence: num,
+    affix: Affix.INFIX,
+    arity: Arity.BINARY,
+    associativity: Associativity.LEFT,
+  },
+  {
+    operator: "+",
+    precedence: count(),
+    affix: Affix.INFIX,
+    arity: Arity.BINARY,
+    associativity: Associativity.LEFT,
+  },
+  {
+    operator: "++",
+    precedence: num,
+    affix: Affix.SUFFIX,
+    arity: Arity.UNARY,
+    associativity: Associativity.NULL,
+  },
+  {
+    operator: "-",
+    precedence: num,
+    affix: Affix.INFIX,
+    arity: Arity.BINARY,
+    associativity: Associativity.LEFT,
+  },
+  {
+    operator: "--",
+    precedence: num,
+    affix: Affix.SUFFIX,
+    arity: Arity.UNARY,
+    associativity: Associativity.NULL,
+  },
+  {
+    operator: "*",
+    precedence: num,
+    affix: Affix.INFIX,
+    arity: Arity.BINARY,
+    associativity: Associativity.LEFT,
+  },
+  {
+    operator: "/",
+    precedence: num,
+    affix: Affix.SUFFIX,
+    arity: Arity.UNARY,
+    associativity: Associativity.NULL,
+  },
+  {
+    operator: "%",
+    precedence: num,
+    affix: Affix.INFIX,
+    arity: Arity.BINARY,
+    associativity: Associativity.LEFT,
+  },
+  {
+    operator: "$",
+    precedence: num,
+    affix: Affix.INFIX,
+    arity: Arity.BINARY,
+    associativity: Associativity.LEFT,
+  },
+  {
+    operator: "<<<",
+    precedence: num,
+    affix: Affix.INFIX,
+    arity: Arity.BINARY,
+    associativity: Associativity.RIGHT,
+  },
+  {
+    operator: ">>>",
+    precedence: num,
+    affix: Affix.INFIX,
+    arity: Arity.BINARY,
+    associativity: Associativity.RIGHT,
+  },
+  {
+    operator: "&",
+    precedence: num,
+    affix: Affix.INFIX,
+    arity: Arity.BINARY,
+    associativity: Associativity.LEFT,
+  },
+  {
+    operator: "|",
+    precedence: num,
+    affix: Affix.INFIX,
+    arity: Arity.BINARY,
+    associativity: Associativity.LEFT,
+  },
+  {
+    operator: "^",
+    precedence: num,
+    affix: Affix.INFIX,
+    arity: Arity.BINARY,
+    associativity: Associativity.LEFT,
+  },
+  {
+    operator: "!!",
+    precedence: num,
+    affix: Affix.SUFFIX,
+    arity: Arity.UNARY,
+    associativity: Associativity.NULL,
+  },
 ];
 
 export function getPrecedence(operator: string): number {
@@ -67,18 +229,18 @@ export function getPrecedence(operator: string): number {
 }
 
 export function getAffix(operator: string): number {
-  const op = precedenceDictionary.find((entry) => entry.operator === operator)
-  return op ? op.affix : Infinity
+  const op = precedenceDictionary.find((entry) => entry.operator === operator);
+  return op ? op.affix : Infinity;
 }
 
 export function getAssociativity(operator: string): number {
-  const op = precedenceDictionary.find((entry) => entry.operator === operator)
-  return op ? op.associativity : Infinity
+  const op = precedenceDictionary.find((entry) => entry.operator === operator);
+  return op ? op.associativity : Infinity;
 }
 
 export function getArity(operator: string): number {
-  const op = precedenceDictionary.find((entry) => entry.operator === operator)
-  return op ? op.arity : Infinity
+  const op = precedenceDictionary.find((entry) => entry.operator === operator);
+  return op ? op.arity : Infinity;
 }
 
 export function checkIfOperator(token: Token): Boolean {

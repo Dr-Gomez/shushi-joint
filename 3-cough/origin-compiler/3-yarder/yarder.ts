@@ -46,12 +46,12 @@ export function yardenize(cargos: Array<Cargo>): Array<Cargo> {
           operators.length > 0 &&
           checkIfOperator(cargo as Token) &&
           (
-            getPrecedence(operators[operators.length - 1].value) +
-            getArity((cargo as Token).value))
-            >=
+              getPrecedence(operators[operators.length - 1].value) +
+              getArity((cargo as Token).value)
+            ) >=
             getPrecedence((cargo as Token).value) +
-            getArity((cargo as Token).value) +
-            getAssociativity((cargo as Token).value)
+              getArity((cargo as Token).value) +
+              getAssociativity((cargo as Token).value)
         ) {
           output.push(operators.pop()!);
         }
@@ -60,7 +60,7 @@ export function yardenize(cargos: Array<Cargo>): Array<Cargo> {
       }
     } else if (cargo.type === TokenType.COMMENT) {
       cargoIndex++;
-      continue
+      continue;
     } else {
       while (operators.length > 0) {
         output.push(operators.pop()!);

@@ -47,7 +47,15 @@ interface IdentifierNode extends Node {
   value: null;
 }
 
+interface BinaryOperatorNode extends Node {
+  type: NodeType.BINARY_OPERATOR;
+  leftOperand: Node;
+  RightOperand: Node;
+  value: string;
+}
+
 export {
+  BinaryOperatorNode,
   BoolNode,
   IdentifierNode,
   Node,

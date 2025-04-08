@@ -214,30 +214,30 @@ function handleComment(input: string, index: number): TokenWrapper {
   let outToken: Token | undefined;
 
   if (isComment(input[index + 1]) && index < input.length) {
-    index += 2
-    const startIndex = index
-    while (input[index] !== "\n" && input[index] !== "\r" && index < input.length) {
-      index++
+    index += 2;
+    const startIndex = index;
+    while (
+      input[index] !== "\n" && input[index] !== "\r" && index < input.length
+    ) {
+      index++;
     }
 
-    const value = input.substring(startIndex, index)
-    
-    outToken = { value: value, type: TokenType.COMMENT }
-    return { token: outToken, index: index }
+    const value = input.substring(startIndex, index);
 
+    outToken = { value: value, type: TokenType.COMMENT };
+    return { token: outToken, index: index };
   } else {
-    index++
-    const startIndex = index 
+    index++;
+    const startIndex = index;
     while (!isComment(input[index]) && index < input.length) {
-      index++
+      index++;
     }
 
-    const value = input.substring(startIndex, index) 
+    const value = input.substring(startIndex, index);
 
-    outToken = { value: value, type: TokenType.COMMENT }
-    return { token: outToken, index: index }
+    outToken = { value: value, type: TokenType.COMMENT };
+    return { token: outToken, index: index };
   }
-
 }
 
 function handleError(input: string, index: number): TokenWrapper {
@@ -269,7 +269,6 @@ function handleError(input: string, index: number): TokenWrapper {
   return { token: outToken, index: index };
 }
 
-
 export function tokenize(input: string): Array<Token> {
   const tokensOut: Array<Token> = [];
 
@@ -290,7 +289,7 @@ export function tokenize(input: string): Array<Token> {
     } else if (isSeparator(input[index])) {
       jumpToken = handleSeparator(input, index);
     } else if (isComment(input[index])) {
-      jumpToken = handleComment(input, index)
+      jumpToken = handleComment(input, index);
     } else {
       jumpToken = handleError(input, index);
     }
