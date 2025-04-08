@@ -149,7 +149,7 @@ function isAssignmentOperator(token: string) {
   return assignmentOperators.includes(token);
 }
 
-const arithmeticOperators: Array<string> = ["+", "-", "*", "/", "//", "%"];
+const arithmeticOperators: Array<string> = ["+", "-", "*", "/", "%", "$"];
 function isArithmeticOperator(token: string) {
   return arithmeticOperators.includes(token);
 }
@@ -159,7 +159,7 @@ function isBinaryOperator(token: string) {
   return binaryOperators.includes(token);
 }
 
-const unaryOperators: Array<string> = ["!", "++", "--"];
+const unaryOperators: Array<string> = ["!!", "++", "--"];
 function isUnaryOperator(token: string) {
   return unaryOperators.includes(token);
 }
